@@ -26,3 +26,7 @@ data_file = "data.csv"
 
 # Data import
 data_set = pd.read_csv(path.join(data_directory, data_file))
+
+# Data format
+data_set_dependent = data_set.iloc[ : , :-1 ].values
+data_set_independent = data_set.iloc[ : , -1 ].values
