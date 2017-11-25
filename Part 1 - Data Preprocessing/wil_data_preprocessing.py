@@ -13,4 +13,16 @@ __version__ = "0.1"
 __maintainer__ = "Wil Poole"
 __email__ = "@"
 __status__ = "Development"
+
 # Import libraries
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from os import path
+
+# Variables
+data_directory = "data"
+data_file = "data.csv"
+
+# Data import
+data_set = pd.read_csv(path.join(data_directory, data_file))
