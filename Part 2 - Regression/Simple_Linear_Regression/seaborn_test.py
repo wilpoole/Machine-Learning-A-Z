@@ -16,8 +16,11 @@ data.head()
 
 sns.pairplot(data, x_vars=['TV','radio','newspaper'], y_vars='sales', size=7, aspect=0.7, kind = 'reg')
 
-sns.lmplot(x="x", y="y", hue="dataset", data=data,
-           col_wrap=2, ci=None, palette="muted", size=4,
+df = sns.load_dataset("anscombe")
+print df.shape
+
+sns.lmplot(x="x", y="y", col="dataset", hue="dataset", data=df,
+           col_wrap=2, ci=90, palette="muted", size=4,
            scatter_kws={"s": 50, "alpha": 1})
 
 

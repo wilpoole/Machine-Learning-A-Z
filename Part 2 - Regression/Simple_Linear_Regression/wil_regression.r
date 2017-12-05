@@ -21,23 +21,28 @@ data.set.test <- subset(data.set, split == FALSE)
 
 # Fit the model
 
-regressor = lm(formula = Salary ~ YearsExperience,
+regressor <- lm(formula = Salary ~ YearsExperience,
   data = data.set.training
 )
 
 summary(regressor)
 
 
-data.set.predict = predict(regressor, newdata = data.set.test)
+data.set.predict <- predict(regressor, newdata = data.set.test)
 
 
-ggplot() +
+plt <- ggplot() +
   geom_point(aes(
     x = data.set.training$YearsExperience, y = data.set.training$Salary
   ), color = "red") +
+  geom_point(aes(
+    x = data.set.test$YearsExperience, y = data.set.test$Salary
+  ), color = "green") +
   geom_line(aes(
     x = data.set.training$YearsExperience, y = predict(regressor, newdata = data.set.training)
   ), color = "blue") +
   ggtitle("Salary vs Experience") +
   xlab("Years Experience (Yrs)") +
   ylab("Salary ($)")
+
+show(plt)
