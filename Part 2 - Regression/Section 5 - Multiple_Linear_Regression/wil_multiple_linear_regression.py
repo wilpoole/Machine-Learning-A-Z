@@ -66,3 +66,65 @@ print(regressor)
 y_pred = regressor.predict(X_test)
 
 print(y_pred)
+
+# Plot comparisons
+plot = plt.scatter(y_test, y_pred, color = "red")
+plt.show(plot)
+
+# Backward elination
+# Package to assess the model
+import statsmodels.formula.api as sm
+# Need to add column of 1's to X to account for constant
+X = np.append(arr = np.ones((len(X),1)).astype(int), values = X, axis = 1)
+# Create new X_opt for manuplulation
+X_opt = X[:,[0,1,2,3,4,5]]
+# Need to create a new regressor for our new data and class
+regressor_OLS = sm.OLS(endog = y, exog = X_opt).fit()
+
+print(regressor_OLS.summary())
+
+# Remove index 2 as it has the highest P value
+X_opt = X[:,[0,1,3,4,5]]
+# Need to create a new regressor for our new data and class
+regressor_OLS = sm.OLS(endog = y, exog = X_opt).fit()
+
+print(regressor_OLS.summary())
+
+# Remove index 1 as it has the highest P value
+X_opt = X[:,[0,3,4,5]]
+# Need to create a new regressor for our new data and class
+regressor_OLS = sm.OLS(endog = y, exog = X_opt).fit()
+
+print(regressor_OLS.summary())
+
+# Remove index 4 as it has the highest P value
+X_opt = X[:,[0,3,5]]
+# Need to create a new regressor for our new data and class
+regressor_OLS = sm.OLS(endog = y, exog = X_opt).fit()
+
+print(regressor_OLS.summary())
+
+# Remove index 4 as it has the highest P value
+X_opt = X[:,[0,3]]
+# Need to create a new regressor for our new data and class
+regressor_OLS = sm.OLS(endog = y, exog = X_opt).fit()
+
+print(regressor_OLS.summary())
+
+
+import statsmodels.formula.api as sm
+def backwardElimination(x, sl):
+    numVars = len(x[0])
+    for i in range(0, numVars):
+        regressor_OLS = sm.OLS(y, x).fit()
+        maxVar = max(regressor_OLS.pvalues).astype(float)
+        if maxVar > sl:
+            for j in range(0, numVars - i):
+                if (regressor_OLS.pvalues[j].astype(float) == maxVar):
+                    x = np.delete(x, j, 1)
+    regressor_OLS.summary()
+    return x
+
+SL = 0.05
+X_opt = X[:, [0, 1, 2, 3, 4, 5]]
+X_Modeled = backwardElimination(X_opt, SL)
