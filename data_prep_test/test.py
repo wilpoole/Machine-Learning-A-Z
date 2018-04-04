@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-from dataprep import data_load
+import dataprep
 
 from os import path
 
@@ -13,6 +13,6 @@ data_directory = "../Part 1 - Data Preprocessing/data"
 data_file = "data.csv"
 
 # Load test data
-df = data_load.data_load(data_directory, data_file)
+df = dataprep.data_load(data_directory, data_file)
 
 df = data_preparation(df, process_missing_values = True)

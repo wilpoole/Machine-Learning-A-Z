@@ -13,9 +13,13 @@ __maintainer__ = "Wil Poole"
 __email__ = "@"
 __status__ = "Development"
 
+import pandas as pd
+
 def data_load(data_directory, data_file):
+    """ Load data given path length """
+
     # Load the data
     print("Loading data...")
-    df = pandas.read_csv(path.join(data_directory, data_file))
+    df = pd.read_csv(path.join(data_directory, data_file))
     print("...data loaded.")
     return df
