@@ -5,21 +5,26 @@ library(ggplot2)
 
 # Variables
 data.directory <- "."
-data.file <- "50_Startups.csv"
+data.file <- "Position_Salaries.csv"
 
 # Load the data
 data.set <- read.csv(file.path(data.directory, data.file))
+data.set <- data.set[2:3]
 head(data.set)
 
-# Encoding categorical data
-data.set$State <- factor(data.set$State,
-  levels = unique(data.set$State),
-  labels = seq(1, length(unique(data.set$State)), 1)
-)
+# Fitting linear model first
+lin.reg <- lm(data = data.set, formula = Salary ~ .)
 
-# Split the data into training and test
-set.seed(0)
-split <- sample.split(data.set$R.D.Spend , SplitRatio = 0.8)
-data.set.training <- subset(data.set, split == TRUE)
-data.set.test <- subset(data.set, split == FALSE)
-head(data.set.training)
+# Poly regression
+data.set$Level2 <- data.set$Level^2
+data.set$Level3 <- data.set$Level^3
+poly.reg <- lm(formula = Salary ~ ., data = data.set)
+summary(poly.reg)
+
+# Visualise the linear model
+ggplot() +
+  geom_point(aes(x = data.set$Level, y = data.set$Salary),color = 'red') +
+  geom_line(aes(x = data.set$Level, y = predict(lin.reg, newdata = data.set$Level)), color = 'blue') +
+  ggtitle('The title') +
+  xlab('Level') +
+  ylab('Salary')
