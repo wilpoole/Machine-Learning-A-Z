@@ -47,8 +47,10 @@ data_set_dependent[:, 0] = LabelEncoder().fit_transform(
 data_set_dependent = OneHotEncoder(
   categorical_features = [0]
   ).fit_transform(data_set_dependent).toarray()
+len(data_set_dependent)
 
 data_set_independent = LabelEncoder().fit_transform(data_set_independent)
+print(data_set_independent)
 
 data_set_dependent_train, data_set_dependent_test, data_set_independent_train, data_set_independent_test = train_test_split(
   data_set_dependent, data_set_independent, test_size = 0.2, random_state = 0
